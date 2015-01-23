@@ -12,40 +12,36 @@ object CsvController extends Controller {
   }
 
   private def formDataResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asFormUrlEncoded map { data: Map[String, Seq[String]] =>
-      Logger.debug("Interpretting as URL encoded form data")
+    request.body.asFormUrlEncoded map formDataToCsv map (Ok(_))
 
-      val keys: Seq[String] = data.keys.toList.sorted
-      val headLine: String = keys mkString ","
-      val numValues: Int = data.map(_._2.length).max
+  private def plainTextResult(request: Request[AnyContent]): Option[Result] =
+    request.body.asText map tsvToCsv map (Ok(_))
 
-      val bodyLines: Seq[String] =
-        (0 until numValues) map { i =>
-          keys map { key =>
-            val values = data.getOrElse(key, Nil)
-            if(i < values.length) values(i) else ""
-          } mkString ","
-        }
-
-      Ok(headLine +: bodyLines mkString "\n")
-    }
-
-  private def plainTextResult(request: Request[AnyContent]): Option[Result] = {
-    Logger.debug("Interpretting as plain text")
-    request.body.asText map (str => Ok(tsvToCsv(str)))
-  }
-
-  private def rawBufferResult(request: Request[AnyContent]): Option[Result] = {
-    Logger.debug("Interpretting as binary data")
-    request.body.asRaw map (buff => Ok(tsvToCsv(bufferToString(buff))))
-  }
+  private def rawBufferResult(request: Request[AnyContent]): Option[Result] =
+    request.body.asRaw map rawBufferToCsv map (Ok(_))
 
   private val failResult: Result =
     BadRequest("Expected multipart/form-data or text/tsv")
 
+  private def formDataToCsv(data: Map[String, Seq[String]]): String = {
+    val keys: Seq[String] = data.keys.toList.sorted
+    val headLine: String = keys mkString ","
+    val numValues: Int = data.map(_._2.length).max
+
+    val bodyLines: Seq[String] =
+      (0 until numValues) map { i =>
+        keys map { key =>
+          val values = data.getOrElse(key, Nil)
+          if(i < values.length) values(i) else ""
+        } mkString ","
+      }
+
+    headLine +: bodyLines mkString "\n"
+  }
+
   private def tsvToCsv(str: String) =
     str.replaceAll("\t", ",")
 
-  private def bufferToString(buff: RawBuffer): String =
+  private def rawBufferToCsv(buff: RawBuffer): String =
     buff.asBytes() map (bytes => new String(bytes)) getOrElse ""
 }
