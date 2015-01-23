@@ -1,0 +1,27 @@
+@import "lib/bootstrap/less/bootstrap.less";
+
+@font-family-base: @font-family-serif;
+@font-size-base: 30px;
+
+html#landing  .nav .landing  a { background: @link-color; color: white; }
+html#signup   .nav .signup   a { background: @link-color; color: white; }
+html#login    .nav .login    a { background: @link-color; color: white; }
+html#chatroom .nav .chatroom a { background: @link-color; color: white; }
+
+h1 {
+  margin-top: 0;
+}
+
+.list-messages {
+  min-height: 5em;
+  padding-left: @padding-base-horizontal;
+  padding-right: @padding-base-horizontal;
+
+  .author {
+    font-weight: bold;
+  }
+}
+
+pre {
+  font-size: .6em;
+}
