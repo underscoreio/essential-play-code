@@ -1,0 +1,4 @@
+GET /                           controllers.LandingController.index
+GET /chat                       controllers.ChatController.index
+GET /chat/:text                 controllers.ChatController.submitMessage(text: String)
+GET /login/:username/:password  controllers.AuthController.login(username: String, password: String)

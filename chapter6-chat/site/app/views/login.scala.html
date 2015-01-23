@@ -1,0 +1,11 @@
+@(loginForm: Form[services.AuthServiceMessages.LoginRequest])
+
+@layout("login") {
+  <h1>Log In</h1>
+
+  @helper.form(action = routes.AuthController.submitLogin) {
+    @helper.inputText(loginForm("username"),     '_label -> "Username", 'class -> "form-control")
+    @helper.inputPassword(loginForm("password"), '_label -> "Password", 'class -> "form-control")
+    <button class="btn btn-primary" type="submit">OK</button>
+  }
+}

@@ -1,0 +1,19 @@
+@(messages: Seq[services.ChatServiceMessages.Message], chatForm: Form[services.ChatServiceMessages.ChatRequest])
+
+@layout("chatroom") {
+  <h1>Chat</h1>
+
+  <ul class="list-messages list-unstyled">
+    @for(message <- messages) {
+      <li>
+        <span class="author">@message.author</span>
+        <span class="text">@message.text</span>
+      </li>
+    }
+  </ul>
+
+  @helper.form(action = routes.ChatController.submitMessage) {
+    @helper.inputText(chatForm("text"), '_label -> "Write a message...", 'class -> "form-control")
+    <button class="btn btn-primary" type="submit">OK</button>
+  }
+}
