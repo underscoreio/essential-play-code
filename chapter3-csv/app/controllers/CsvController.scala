@@ -18,10 +18,13 @@ object CsvController extends Controller {
     request.body.asText map tsvToCsv map (Ok(_))
 
   private def rawBufferResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asRaw map rawBufferToCsv map (Ok(_))
+    request.contentType flatMap {
+      case "text/tsv" =>
+        request.body.asRaw map rawBufferToCsv map (Ok(_))
+    }
 
   private val failResult: Result =
-    BadRequest("Expected multipart/form-data or text/tsv")
+    BadRequest("Expected applicaiton/x-url-encoded, text/tsv, or text/plain")
 
   private def formDataToCsv(data: Map[String, Seq[String]]): String = {
     val keys: Seq[String] = data.keys.toList.sorted
@@ -43,5 +46,5 @@ object CsvController extends Controller {
     str.replaceAll("\t", ",")
 
   private def rawBufferToCsv(buff: RawBuffer): String =
-    buff.asBytes() map (bytes => new String(bytes)) getOrElse ""
+    tsvToCsv(buff.asBytes() map (new String(_)) getOrElse "")
 }
