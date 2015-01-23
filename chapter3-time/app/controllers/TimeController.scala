@@ -12,17 +12,23 @@ object TimeController extends Controller {
     Ok("The local time is " + timeString)
   }
 
-  def zones = Action { request =>
-    Ok(zoneIds mkString "\n")
-  }
-
   def timeIn(zoneId: String) = Action { request =>
-    val time = timeInZone(zoneId)
+    val time = localTimeInZone(zoneId)
     val timeString = time map timeToString getOrElse "Time zone not recognized."
     Ok("The time in " + zoneId + " is " + timeString)
   }
 
+  def zones = Action { request =>
+    Ok(zoneIds mkString "\n")
+  }
+
   // Helper methods
+
+  private def localTime: DateTime =
+    DateTime.now
+
+  private def localTimeInZone(zoneId: String): Option[DateTime] =
+    zoneForId(zoneId) map (DateTime.now.withZone)
 
   private def timeToString(time: DateTime): String =
     DateTimeFormat.shortTime.print(time)
@@ -32,10 +38,7 @@ object TimeController extends Controller {
     DateTimeZone.getAvailableIDs.toList
   }
 
-  private def timeInZone(zoneId: String): Option[DateTime] =
-    timezone(zoneId) map (DateTime.now.withZone)
-
-  private def timezone(zoneId: String): Option[DateTimeZone] =
+  private def zoneForId(zoneId: String): Option[DateTimeZone] =
     try { Some(DateTimeZone.forID(zoneId)) }
     catch { case exn: IllegalArgumentException => None }
 }
