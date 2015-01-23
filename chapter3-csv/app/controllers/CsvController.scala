@@ -4,24 +4,23 @@ import play.api._
 import play.api.mvc._
 
 object CsvController extends Controller {
-  def toCsv = Action { request =>
-    formDataResult(request) orElse
-      plainTextResult(request) orElse
-      rawBufferResult(request) getOrElse
-      failResult
-  }
-
-  private def formDataResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asFormUrlEncoded map formDataToCsv map (Ok(_))
-
-  private def plainTextResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asText map tsvToCsv map (Ok(_))
-
-  private def rawBufferResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asRaw map rawBufferToCsv map (Ok(_))
-
-  private val failResult: Result =
-    BadRequest("Expected multipart/form-data or text/tsv")
+  // TODO: Write a controller that:
+  //
+  //  - converts uploads of type `application/x-url-form-url-encoded`
+  //    to CSV using the `formDataToCsv` helper;
+  //
+  //  - converts uploads of type `text/plain`
+  //    to CSV using the `tsvToCsv` helper;
+  //
+  //  - converts uploads of type `text/tsv`
+  //    to CSV using the `rawBufferToCsv` helper;
+  //
+  //  - otherwise responds with an HTTP 400 Bad Request response.
+  //
+  // Tip: Think about how you're going to determine the content type of each request.
+  // The first two cases are handled by special methods in `AnyContent` but the third
+  // is not.
+  def toCsv = ???
 
   private def formDataToCsv(data: Map[String, Seq[String]]): String = {
     val keys: Seq[String] = data.keys.toList.sorted
@@ -43,5 +42,5 @@ object CsvController extends Controller {
     str.replaceAll("\t", ",")
 
   private def rawBufferToCsv(buff: RawBuffer): String =
-    buff.asBytes() map (bytes => new String(bytes)) getOrElse ""
+    tsvToCsv(buff.asBytes() map (new String(_)) getOrElse "")
 }
