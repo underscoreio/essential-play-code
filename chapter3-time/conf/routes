@@ -1,0 +1,3 @@
+GET /time        controllers.TimeController.time
+GET /time/zones  controllers.TimeController.zones
+GET /time/:zone  controllers.TimeController.timeIn(zone: String)
