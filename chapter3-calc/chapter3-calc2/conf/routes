@@ -1,0 +1,6 @@
+// TODO: Create the following routes:
+//
+//  - GET requests to  /add/<int>/to/<int>        should call CalcController.add
+//  - GET requests to  /and/<bool>/with/<bool>    should call CalcController.and
+//  - GET requests to  /concat/<str>/<str>/...    should call CalcController.concat
+//  - GET requests to  /howto/add/<int>/to/<int>  should call CalcController.howToAdd
