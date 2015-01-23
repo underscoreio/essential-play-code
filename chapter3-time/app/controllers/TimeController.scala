@@ -6,18 +6,14 @@ import org.joda.time.format.DateTimeFormat
 import play.api._
 import play.api.mvc._
 
-object TimeController extends Controller {
-  // TODO: Return an HTTP 200 plain text response containing the message:
-  //
-  //   "The local time is <09:00>"
+object TimeController extends Controller with TimeHelpers {
+  // TODO: Return an HTTP 200 plain text response containing the time.
   //
   // Use the `localTime` and `timeToString` helper methods below.
   def time = ???
 
   // TODO: Read in a time zone ID (a string) and return an HTTP 200
-  // plain text response containing the message:
-  //
-  //   "The time in <ZONE> is <TIME>"
+  // plain text response containing the localized time.
   //
   // Use the `localTimeInZone` and `timeToString` helper methods below.
   def timeIn(zoneId: String) = ???
@@ -27,9 +23,9 @@ object TimeController extends Controller {
   //
   // Use the `zoneIds` helper method below.
   def zones = ???
+}
 
-  // Helper methods
-
+trait TimeHelpers {
   private def localTime: DateTime =
     DateTime.now
 
