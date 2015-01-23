@@ -7,22 +7,34 @@ import play.api._
 import play.api.mvc._
 
 object TimeController extends Controller {
-  def time = Action { request =>
-    val timeString = timeToString(DateTime.now)
-    Ok("The local time is " + timeString)
-  }
+  // TODO: Return an HTTP 200 plain text response containing the message:
+  //
+  //   "The local time is <09:00>"
+  //
+  // Use the `localTime` and `timeToString` helper methods below.
+  def time = ???
 
-  def zones = Action { request =>
-    Ok(zoneIds mkString "\n")
-  }
+  // TODO: Read in a time zone ID (a string) and return an HTTP 200
+  // plain text response containing the message:
+  //
+  //   "The time in <ZONE> is <TIME>"
+  //
+  // Use the `localTimeInZone` and `timeToString` helper methods below.
+  def timeIn(zoneId: String) = ???
 
-  def timeIn(zoneId: String) = Action { request =>
-    val time = timeInZone(zoneId)
-    val timeString = time map timeToString getOrElse "Time zone not recognized."
-    Ok("The time in " + zoneId + " is " + timeString)
-  }
+  // TODO: Return an HTTP 200 plain text response containing a list of
+  // available time zone codes.
+  //
+  // Use the `zoneIds` helper method below.
+  def zones = ???
 
   // Helper methods
+
+  private def localTime: DateTime =
+    DateTime.now
+
+  private def localTimeInZone(zoneId: String): Option[DateTime] =
+    zoneForId(zoneId) map (DateTime.now.withZone)
 
   private def timeToString(time: DateTime): String =
     DateTimeFormat.shortTime.print(time)
@@ -32,10 +44,7 @@ object TimeController extends Controller {
     DateTimeZone.getAvailableIDs.toList
   }
 
-  private def timeInZone(zoneId: String): Option[DateTime] =
-    timezone(zoneId) map (DateTime.now.withZone)
-
-  private def timezone(zoneId: String): Option[DateTimeZone] =
+  private def zoneForId(zoneId: String): Option[DateTimeZone] =
     try { Some(DateTimeZone.forID(zoneId)) }
     catch { case exn: IllegalArgumentException => None }
 }

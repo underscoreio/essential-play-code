@@ -1,3 +1,4 @@
-GET /time        controllers.TimeController.time
-GET /time/zones  controllers.TimeController.zones
-GET /time/:zone  controllers.TimeController.timeIn(zone: String)
+// TODO: Add routes for:
+//  - controllers.TimeController.time
+//  - controllers.TimeController.timeIn(...)
+//  - controllers.TimeController.zones
