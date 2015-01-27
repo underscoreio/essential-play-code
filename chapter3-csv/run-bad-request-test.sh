@@ -2,5 +2,5 @@
 
 curl 'http://localhost:9000' \
      --data-binary '@test.tsv' \
-     --header 'Content-Type: text/plain' \
+     --header 'Content-Type: foo/bar' \
      --verbose

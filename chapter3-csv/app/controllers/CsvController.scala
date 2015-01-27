@@ -3,7 +3,7 @@ package controllers
 import play.api._
 import play.api.mvc._
 
-object CsvController extends Controller {
+object CsvController extends Controller with CsvHelpers {
   def toCsv = Action { request =>
     formDataResult(request) orElse
       plainTextResult(request) orElse
@@ -12,24 +12,33 @@ object CsvController extends Controller {
   }
 
   private def formDataResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asFormUrlEncoded map formDataToCsv map (Ok(_))
+    request.body.asFormUrlEncoded map formDataToCsv map csvResult
 
   private def plainTextResult(request: Request[AnyContent]): Option[Result] =
-    request.body.asText map tsvToCsv map (Ok(_))
+    request.body.asText map tsvToCsv map csvResult
 
   private def rawBufferResult(request: Request[AnyContent]): Option[Result] =
     request.contentType flatMap {
-      case "text/tsv" =>
-        request.body.asRaw map rawBufferToCsv map (Ok(_))
+      case "text/tsv" => request.body.asRaw map rawBufferToCsv map csvResult
+      case _          => None
     }
 
-  private val failResult: Result =
-    BadRequest("Expected applicaiton/x-url-encoded, text/tsv, or text/plain")
+  private def csvResult(csvData: String): Result =
+    Ok(csvData).withHeaders("Content-Type" -> "text/csv")
 
-  private def formDataToCsv(data: Map[String, Seq[String]]): String = {
+  private val failResult: Result =
+    BadRequest("Expected application/x-www-form-url-encoded, text/tsv, or text/plain")
+}
+
+trait CsvHelpers {
+  def formDataToCsv(data: Map[String, Seq[String]]): String = {
     val keys: Seq[String] = data.keys.toList.sorted
     val headLine: String = keys mkString ","
-    val numValues: Int = data.map(_._2.length).max
+    val numValues: Int =
+      data.map(_._2.length) match {
+        case Nil     => 0
+        case lengths => lengths.max
+      }
 
     val bodyLines: Seq[String] =
       (0 until numValues) map { i =>
@@ -42,9 +51,9 @@ object CsvController extends Controller {
     headLine +: bodyLines mkString "\n"
   }
 
-  private def tsvToCsv(str: String) =
+  def tsvToCsv(str: String) =
     str.replaceAll("\t", ",")
 
-  private def rawBufferToCsv(buff: RawBuffer): String =
+  def rawBufferToCsv(buff: RawBuffer): String =
     tsvToCsv(buff.asBytes() map (new String(_)) getOrElse "")
 }
