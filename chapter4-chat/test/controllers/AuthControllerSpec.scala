@@ -31,7 +31,7 @@ class AuthControllerSpec extends PlaySpec with ControllerSpecHelpers {
       )))
 
       // The web client follows redirects automatically.
-      // We should end up on the chat page:
+      // We should end up back on the login page:
       response.status must equal(400)
       response.body must include("""User not found or password incorrect""")
     }
@@ -43,7 +43,7 @@ class AuthControllerSpec extends PlaySpec with ControllerSpecHelpers {
       )))
 
       // The web client follows redirects automatically.
-      // We should end up on the chat page:
+      // We should end up back on the login page:
       response.status must equal(400)
       response.body must include("""User not found or password incorrect""")
     }
