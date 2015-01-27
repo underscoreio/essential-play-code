@@ -3,4 +3,5 @@
 #  - a GET request to /add/<int>/to/<int>       should call CalcController.add
 #  - a GET request to /and/<bool>/with/<bool>   should call CalcController.and
 #  - a GET request to /concat/<str>/<str>/...   should call CalcController.concat
+#  - a GET request to /sort?num=<num>&num=<num> should call CalcController.sort
 #  - a GET request to /howto/add/<int>/to/<int> should call CalcController.howToAdd

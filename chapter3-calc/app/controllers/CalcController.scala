@@ -30,11 +30,10 @@ object CalcController extends Controller {
 
   // TODO: Create an action called `concat`:
   //
-  //  - accept two list arguments extracted from the URL;
-  //  - concatenate and sort the lists;
-  //  - return a plain text HTTP 200 response containing a space separated
-  //    list of the result.
-  def sort(a: Seq[String], b: Seq[String]) = ???
+  //  - accept a list of integers extracted from the URL;
+  //  - sort the list;
+  //  - return a space separated plain text HTTP 200 response of the result.
+  def sort(a: List[Int]) = ???
 
   // TODO: Create an action called `howToAdd`:
   //
