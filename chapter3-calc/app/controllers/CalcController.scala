@@ -25,14 +25,24 @@ object CalcController extends Controller {
   //    effectively removing slashes from the text;
   //  - return a plain text HTTP 200 response containing the result.
   //
-  // Use the `urlDecode` helper method in your code.
+  // TIP: Use the `urlDecode` helper method if you need to to decode the .
   def concat(args: String) = ???
+
+  // TODO: Create an action called `concat`:
+  //
+  //  - accept two list arguments extracted from the URL;
+  //  - concatenate and sort the lists;
+  //  - return a plain text HTTP 200 response containing a space separated
+  //    list of the result.
+  def sort(a: Seq[String], b: Seq[String]) = ???
 
   // TODO: Create an action called `howToAdd`:
   //
   //  - accept two integers extracted from the URL;
   //  - return a plain text HTTP 200 response containing the
   //    HTTP method and URL required to add them together.
+  //
+  // TIP: Use the reverse route for `add()` to construct the URL.
   def howToAdd(a: Int, b: Int) = ???
 
   private def urlDecode(str: String) =
