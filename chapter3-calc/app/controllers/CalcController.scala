@@ -16,6 +16,10 @@ object CalcController extends Controller {
     Ok(args.split("/").map(decode).mkString)
   }
 
+  def sort(numbers: List[Int]) = Action { request =>
+    Ok(numbers.sorted mkString " ")
+  }
+
   def howToAdd(a: Int, b: Int) = Action { request =>
     val call = routes.CalcController.add(a, b)
     Ok(call.method + " " + call.url)

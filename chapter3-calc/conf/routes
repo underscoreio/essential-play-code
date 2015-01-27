@@ -1,4 +1,5 @@
 GET /add/:a/to/:b       controllers.CalcController.add(a: Int, b: Int)
 GET /and/:a/with/:b     controllers.CalcController.and(a: Boolean, b: Boolean)
 GET /concat/*args       controllers.CalcController.concat(args: String)
+GET /sort               controllers.CalcController.sort(num: List[Int])
 GET /howto/add/:a/to/:b controllers.CalcController.howToAdd(a: Int, b: Int)
