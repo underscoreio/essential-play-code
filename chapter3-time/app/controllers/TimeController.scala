@@ -6,39 +6,37 @@ import org.joda.time.format.DateTimeFormat
 import play.api._
 import play.api.mvc._
 
-object TimeController extends Controller {
+object TimeController extends Controller with TimeHelpers {
   def time = Action { request =>
-    val timeString = timeToString(DateTime.now)
-    Ok("The local time is " + timeString)
+    Ok(timeToString(localTime))
   }
 
   def timeIn(zoneId: String) = Action { request =>
     val time = localTimeInZone(zoneId)
-    val timeString = time map timeToString getOrElse "Time zone not recognized."
-    Ok("The time in " + zoneId + " is " + timeString)
+    Ok(time map timeToString getOrElse "Time zone not recognized.")
   }
 
   def zones = Action { request =>
     Ok(zoneIds mkString "\n")
   }
+}
 
-  // Helper methods
-
-  private def localTime: DateTime =
+trait TimeHelpers {
+  def localTime: DateTime =
     DateTime.now
 
-  private def localTimeInZone(zoneId: String): Option[DateTime] =
+  def localTimeInZone(zoneId: String): Option[DateTime] =
     zoneForId(zoneId) map (DateTime.now.withZone)
 
-  private def timeToString(time: DateTime): String =
+  def timeToString(time: DateTime): String =
     DateTimeFormat.shortTime.print(time)
 
-  private def zoneIds: List[String] = {
+  def zoneIds: List[String] = {
     import scala.collection.JavaConversions._
     DateTimeZone.getAvailableIDs.toList
   }
 
-  private def zoneForId(zoneId: String): Option[DateTimeZone] =
+  def zoneForId(zoneId: String): Option[DateTimeZone] =
     try { Some(DateTimeZone.forID(zoneId)) }
     catch { case exn: IllegalArgumentException => None }
 }
