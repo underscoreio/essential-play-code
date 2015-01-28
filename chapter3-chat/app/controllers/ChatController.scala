@@ -12,7 +12,7 @@ object ChatController extends Controller with ControllerHelpers {
 
   def index = Action { request =>
     withAuthenticatedUser(request) { creds =>
-      chatRoom
+      Ok(ChatService.messages.mkString("\n"))
     }
   }
 
@@ -22,9 +22,6 @@ object ChatController extends Controller with ControllerHelpers {
       Redirect(routes.ChatController.index)
     }
   }
-
-  private def chatRoom: Result =
-    Ok(ChatService.messages.mkString("\n"))
 
   private def withAuthenticatedUser(request: Request[AnyContent])(func: Credentials => Result): Result =
     request.sessionCookieId match {
