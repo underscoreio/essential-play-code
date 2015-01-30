@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-git checkout master
-git branch -D nohistory
+branches=("exercises" "solutions")
 
-for branch in `git branch | cut -c2-`
+for branch in "${branches[@]}"
 do
   echo "========== $branch =========="
   git checkout $branch
@@ -14,5 +13,4 @@ do
   git push --force github "nohistory:$branch"
 done
 
-git checkout master
-git branch -D nohistory
+git checkout exercises
