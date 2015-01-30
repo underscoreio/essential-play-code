@@ -1,0 +1,15 @@
+GET  /             controllers.LandingController.index
+
+GET  /chat         controllers.ChatController.index
+POST /chat         controllers.ChatController.submitMessage
+
+GET  /login        controllers.AuthController.login
+POST /login        controllers.AuthController.submitLogin
+
+GET  /api/message  controllers.ChatApiController.messages
+POST /api/message  controllers.ChatApiController.chat
+
+POST /api/login    controllers.AuthApiController.login
+GET  /api/whoami   controllers.AuthApiController.whoami
+
+GET  /assets/*file controllers.Assets.at(path="/public", file)
