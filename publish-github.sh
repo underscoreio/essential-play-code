@@ -9,7 +9,6 @@ do
   git branch -D nohistory
   git checkout --orphan nohistory
   git commit -m 'Initial commit'
-  git push github ":$branch"
   git push --force github "nohistory:$branch"
 done
 
