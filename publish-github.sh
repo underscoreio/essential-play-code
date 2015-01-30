@@ -8,7 +8,7 @@ do
   git checkout $branch
   git branch -D nohistory
   git checkout --orphan nohistory
-  git commit -m 'Initial commit'
+  git commit -m "Published $branch"
   git push --force github "nohistory:$branch"
 done
 
