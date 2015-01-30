@@ -24,21 +24,24 @@ For more detailed instructions see Chapter 1 of the book.
 
 ### Getting Started on Linux or OS X
 
-Complete the following steps outlined in Chapter 1 in the section entitled "Setting up SBT for This Book":
+Complete the following steps outlined in Chapter 1 in the section entitled
+"Setting up SBT for This Book":
 
-1. Clone this repository to a directory on your hard drive, e.g. `C:\essential-play-code`:
+1. Clone this repository to a directory on your hard drive,
+   e.g. `C:\essential-play-code`:
 
    ~~~
    bash$ git clone https://github.com/underscoreio/essential-play-code.git
    ~~~
 
-2. Change to the relevant directory:
+2. Change to the directory for the "hello world" exercise:
 
    ~~~
-   bash$ cd essential-play-code
+   bash$ cd essential-play-code/chapter1-hello
    ~~~
 
-3. Run the `sbt.sh` script. You may have to wait while SBT downloads various dependencies:
+3. Run the `sbt.sh` script.
+   You may have to wait while SBT downloads various dependencies:
 
    ~~~
    bash$ ./sbt.sh
@@ -48,7 +51,8 @@ Complete the following steps outlined in Chapter 1 in the section entitled "Sett
    [app] $
    ~~~
 
-4. Type `run` at the SBT prompt. You may have to wait while SBT downlaods various dependencies:
+4. Type `run` at the SBT prompt.
+   You may have to wait while SBT downlaods various dependencies:
 
    ~~~
    [app] $ run
@@ -62,7 +66,9 @@ Complete the following steps outlined in Chapter 1 in the section entitled "Sett
    (Server started, use Ctrl+D to stop and go back to the console...)
    ~~~
 
-5. Open [http://localhost:9000](http://localhost:9000) in a web browser. SBT will compile the application, which may take a while. After this you should see the message `"Hello World!"` in your browser.
+5. Open [http://localhost:9000](http://localhost:9000) in a web browser.
+   SBT will compile the application, which may take a while.
+   After this you should see the message `"Hello World!"` in your browser.
 
    ~~~
    [app] $ run
@@ -78,21 +84,25 @@ Complete the following steps outlined in Chapter 1 in the section entitled "Sett
 
 ### Getting Started on Windows
 
-You will need to have installed Git and Java (we recommend Oracle's Java 7 SDK). Complete the following steps outlined in Chapter 1 in the section entitled "Setting up SBT for This Book":
+You will need to have installed Git and Java (we recommend Oracle's Java 7 SDK).
+Complete the following steps outlined in Chapter 1 in the section entitled
+"Setting up SBT for This Book":
 
 1. Clone this repository to a directory on your hard drive, e.g. `C:\essential-play-code`:
 
    ~~~
-   C:\> git clone https://github.com/underscoreio/essential-play-code.git C:\essential-play-code
+   C:\> git clone https://github.com/underscoreio/essential-play-code.git ↩
+                  C:\essential-play-code
    ~~~
 
-2. Open a command prompt and change to the relevant directory:
+2. Change to the directory for the "hello world" exercise:
 
    ~~~
-   C:\> cd\essential-play-code
+   C:\> cd\essential-play-code\chapter1-hello
    ~~~
 
-3. Run the `sbt.bat` script. You may have to wait while SBT downloads various dependencies:
+3. Run the `sbt.bat` script.
+   You may have to wait while SBT downloads various dependencies:
 
    ~~~
    C:\essential-play-code> sbt
@@ -102,7 +112,8 @@ You will need to have installed Git and Java (we recommend Oracle's Java 7 SDK).
    [app] $
    ~~~
 
-4. Type `run` at the SBT prompt. You may have to wait while SBT downlaods various dependencies:
+4. Type `run` at the SBT prompt.
+   You may have to wait while SBT downlaods various dependencies:
 
    ~~~
    [app] $ run
@@ -116,7 +127,9 @@ You will need to have installed Git and Java (we recommend Oracle's Java 7 SDK).
    (Server started, use Ctrl+D to stop and go back to the console...)
    ~~~
 
-5. Open [http://localhost:9000](http://localhost:9000) in a web browser. SBT will compile the application, which may take a while. After this you should see the message `"Hello World!"` in your browser.
+5. Open [http://localhost:9000](http://localhost:9000) in a web browser.
+   SBT will compile the application, which may take a while.
+   After this you should see the message `"Hello World!"` in your browser.
 
    ~~~
    [app] $ run
@@ -129,7 +142,3 @@ You will need to have installed Git and Java (we recommend Oracle's Java 7 SDK).
 
    (Server started, use Ctrl+D to stop and go back to the console...)
    ~~~
-
-### Switching Between Exercises
-
-Each sample, exercise, and solution is stored as a separate branch. Commit, stash, or discard your changes on the current branch, checkout the desired branch, and start SBT with the `sbt.sh` or `sbt.bat` script as appropriate.
