@@ -4,6 +4,7 @@ import play.api._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc._
+import play.api.libs.json._
 
 object ChatController extends Controller with ControllerHelpers {
   import services.AuthService
@@ -11,8 +12,6 @@ object ChatController extends Controller with ControllerHelpers {
 
   import services.ChatService
   import services.ChatServiceMessages._
-
-  case class ChatRequest(text: String)
 
   val chatForm = Form(mapping(
     "text" -> nonEmptyText

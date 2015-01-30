@@ -2,6 +2,7 @@ package services
 
 object AuthService {
   import services.AuthServiceMessages._
+  import services.ChatServiceMessages._
 
   private val passwords = Map[Username, Password](
     "alice"   -> "password1",

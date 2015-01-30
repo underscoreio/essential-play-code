@@ -1,6 +1,8 @@
 package controllers
 
 import play.api._
+import play.api.data._
+import play.api.data.Forms._
 import play.api.mvc._
 
 object ChatController extends Controller with ControllerHelpers {
@@ -10,26 +12,45 @@ object ChatController extends Controller with ControllerHelpers {
   import services.ChatService
   import services.ChatServiceMessages._
 
-  def index = Action { request =>
+  case class ChatRequest(text: String)
+
+  val chatForm = Form(mapping(
+    "text" -> nonEmptyText
+  )(ChatRequest.apply)(ChatRequest.unapply))
+
+  def index = Action { implicit request =>
     withAuthenticatedUser(request) { creds =>
-      Ok(ChatService.messages.mkString("\n"))
+      chatRoom()
     }
   }
 
-  def submitMessage(text: String) = Action { request =>
+  def submitMessage = Action { implicit request =>
     withAuthenticatedUser(request) { creds =>
-      ChatService.chat(creds.username, text)
-      Redirect(routes.ChatController.index)
+      chatForm.bindFromRequest().fold(
+        hasErrors = { form: Form[ChatRequest] =>
+          chatRoom(form)
+        },
+        success = { chatReq: ChatRequest =>
+          ChatService.chat(creds.username, chatReq.text)
+          chatRoom(chatForm)
+        }
+      )
     }
   }
+
+  private def chatRoom(form: Form[ChatRequest] = chatForm): Result =
+    Ok(views.html.chatroom(ChatService.messages, form))
 
   private def withAuthenticatedUser(request: Request[AnyContent])(func: Credentials => Result): Result =
     request.sessionCookieId match {
       case Some(sessionId) =>
         AuthService.whoami(sessionId) match {
           case res: Credentials     => func(res)
-          case res: SessionNotFound => BadRequest("Not logged in!")
+          case res: SessionNotFound => redirectToLogin
         }
-      case None => BadRequest("Not logged in!")
+      case None => redirectToLogin
     }
+
+  private val redirectToLogin: Result =
+    Redirect(routes.AuthController.login)
 }

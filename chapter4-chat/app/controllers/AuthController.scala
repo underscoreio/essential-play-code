@@ -4,6 +4,7 @@ import play.api._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc._
+import play.api.libs.json._
 
 object AuthController extends Controller with ControllerHelpers {
   import services.AuthService
@@ -19,20 +20,17 @@ object AuthController extends Controller with ControllerHelpers {
   }
 
   def submitLogin = Action { implicit request =>
-    withValidatedForm[LoginRequest](loginForm, views.html.login(_)) { loginReq =>
-      AuthService.login(loginReq) match {
-        case res: LoginSuccess      => Redirect(routes.ChatController.index).withSessionCookie(res.sessionId)
-        case res: UserNotFound      => BadRequest(views.html.login(loginForm.withError("username", "User not found or password incorrect")))
-        case res: PasswordIncorrect => BadRequest(views.html.login(loginForm.withError("username", "User not found or password incorrect")))
+    loginForm.bindFromRequest().fold(
+      hasErrors = { loginForm =>
+        BadRequest(views.html.login(loginForm))
+      },
+      success = { loginReq =>
+        AuthService.login(loginReq) match {
+          case res: LoginSuccess      => Redirect(routes.ChatController.index).withSessionCookie(res.sessionId)
+          case res: UserNotFound      => BadRequest(views.html.login(loginForm.withError("username", "User not found or password incorrect")))
+          case res: PasswordIncorrect => BadRequest(views.html.login(loginForm.withError("username", "User not found or password incorrect")))
+        }
       }
-    }
-  }
-
-  import play.twirl.api.Html
-
-  def withValidatedForm[A](form: Form[A], view: Form[A] => Html)(func: A => Result)(implicit request: Request[AnyContent]): Result =
-    form.bindFromRequest().fold(
-      hasErrors = (form: Form[A]) => BadRequest(view(form)),
-      success   = (data: A)       => func(data)
     )
+  }
 }
