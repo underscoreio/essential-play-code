@@ -40,16 +40,16 @@ class ChatControllerSpec extends PlaySpec with ControllerSpecHelpers with Before
 
     "be inaccessible to unauthorized users" in {
       val response = await(wsCall(routes.ChatController.index).get())
-      response.body must include("""<h1>Log In</h1>""")
+      response.body must include("""Not logged in""")
     }
   }
 
   "chat form" must {
     "post a message" in {
       await {
-        wsCall(routes.ChatController.submitMessage).
+        wsCall(routes.ChatController.submitMessage(text = "Hello world!")).
         withHeaders("Cookie" -> cookies).
-        post(Map("text" -> Seq("Hello world!")))
+        get
       }
 
       val response = await {
@@ -66,11 +66,11 @@ class ChatControllerSpec extends PlaySpec with ControllerSpecHelpers with Before
 
     "be inaccessible to unauthorized users" in {
       val response = await {
-        wsCall(routes.ChatController.submitMessage).
-        post(Map[String, Seq[String]]())
+        wsCall(routes.ChatController.submitMessage(text = "Hello world!")).
+        get
       }
 
-      response.body must include("""<h1>Log In</h1>""")
+      response.body must include("""Not logged in""")
     }
   }
 }

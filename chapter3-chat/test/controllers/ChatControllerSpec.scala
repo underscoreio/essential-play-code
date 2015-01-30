@@ -23,6 +23,8 @@ class ChatControllerSpec extends PlaySpec with ControllerSpecHelpers with Before
 
   "chat page" must {
     "contain messages" in {
+      pending // TODO: Enable this test when you're ready
+
       ChatService.chat("author1", "message1")
       ChatService.chat("author2", "message2")
 
@@ -39,17 +41,21 @@ class ChatControllerSpec extends PlaySpec with ControllerSpecHelpers with Before
     }
 
     "be inaccessible to unauthorized users" in {
+      pending // TODO: Enable this test when you're ready
+
       val response = await(wsCall(routes.ChatController.index).get())
-      response.body must include("""Not logged in""")
+      response.body must include("""<h1>Log In</h1>""")
     }
   }
 
   "chat form" must {
     "post a message" in {
+      pending // TODO: Enable this test when you're ready
+
       await {
-        wsCall(routes.ChatController.submitMessage(text = "Hello world!")).
+        wsCall(routes.ChatController.submitMessage).
         withHeaders("Cookie" -> cookies).
-        get
+        post(Map("text" -> Seq("Hello world!")))
       }
 
       val response = await {
@@ -65,12 +71,14 @@ class ChatControllerSpec extends PlaySpec with ControllerSpecHelpers with Before
     }
 
     "be inaccessible to unauthorized users" in {
+      pending // TODO: Enable this test when you're ready
+
       val response = await {
-        wsCall(routes.ChatController.submitMessage(text = "Hello world!")).
-        get
+        wsCall(routes.ChatController.submitMessage).
+        post(Map[String, Seq[String]]())
       }
 
-      response.body must include("""Not logged in""")
+      response.body must include("""<h1>Log In</h1>""")
     }
   }
 }
