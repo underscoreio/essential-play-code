@@ -9,7 +9,7 @@ do
   git branch -D nohistory
   git checkout --orphan nohistory
   git commit -m "Published $branch"
-  git push --force github "nohistory:$branch"
+  git push --force public "nohistory:$branch"
 done
 
 git checkout exercises
