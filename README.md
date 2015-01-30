@@ -4,7 +4,7 @@ This repository contains exercises and solutions for
 [Underscore's Essential Play](http://underscore.io/training/courses/essential-play/)
 book and training course.
 
-If you want the content or exercises with the authors or other owners,
+If you want to discuss the content or exercises with the authors,
 join us in our chat room on Gitter:
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/underscoreio/scala?utm_source=essential-play-readme&utm_medium=badge&utm_campaign=essential-play)
