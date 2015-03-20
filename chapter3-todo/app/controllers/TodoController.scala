@@ -2,6 +2,7 @@ package controllers
 
 import play.api._
 import play.api.mvc._
+import play.api.templates.Html
 import models._
 
 object TodoController extends Controller {
@@ -15,11 +16,7 @@ object TodoController extends Controller {
     Ok(renderTodoList(todoList))
   }
 
-  def renderTodoList(todoList: TodoList) =
-    views.html.todoList(todoList)
-    // todoList.todos map {
-    //   case Todo(id, label, complete) =>
-    //     val checkbox = if(complete) "[X]" else "[ ]"
-    //     s"$checkbox $label ($id)"
-    // } mkString "\n"
+  /* TODO: Call your template to render the todo list. */
+  def renderTodoList(todoList: TodoList): Html =
+    ???
 }
