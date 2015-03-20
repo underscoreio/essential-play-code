@@ -1,0 +1,28 @@
+@(title: String)(content: => Html)
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>@title</title>
+	<style>
+	html,body {
+		font-size: 24px;
+	}
+	.todo-list {
+		list-style: 0;
+		padding-left: 0;
+	}
+	.todo-item label {
+		display: block;
+		padding: .5em;
+	}
+	.todo-item:hover label {
+		background: #eeeeee;
+	}
+	</style>
+</head>
+<body>
+	<h1>@title</h1>
+	@content
+</body>
+</html>
