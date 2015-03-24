@@ -3,14 +3,14 @@
 @import models._
 
 @pageLayout("Todo List") {
-	<ul class="todo-list">
-	@for(item <- todoList.items) {
-  	<li id="@item.id" class="todo-item">
-			<label>
-				<input type="checkbox" @if(item.complete) { checked }>
-				@item.label
-			</label>
-		</li>
-	}
-	</ul>
+  <ul class="todo-list">
+  @for(item <- todoList.items) {
+    <li id="@item.id" class="todo-item">
+      <label>
+        <input type="checkbox" @if(item.complete) { checked }>
+        @item.label
+      </label>
+    </li>
+  }
+  </ul>
 }
