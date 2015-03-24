@@ -1,28 +1,37 @@
 package models
 
-case class TodoList(items: Seq[TodoItem]) {
-	def add(item: TodoItem): TodoList =
-		this.copy(items = items :+ item)
+case class TodoList(items: Seq[Todo]) {
+	def addOrUpdate(item: Todo): TodoList =
+		item.id match {
+			case Some(id) if this contains id =>
+				this.copy(items.map(item2 => if(item2 hasId id) item else item2))
+
+			case _ =>
+				this.copy(items = items :+ item.withId)
+		}
 
 	def remove(id: String): TodoList =
-		this.copy(items = items.filterNot(_.id == id))
+		this.copy(items = items.filterNot(_ hasId id))
 
-	def complete(id: String): TodoList =
-		this.copy(items.map { item =>
-			if(item.id == id) {
-				item.copy(complete = true)
-			} else {
-				item
-			}
-		})
+	def contains(id: String): Boolean =
+		items.exists(_ hasId id)
 }
 
-case class TodoItem(id: String, label: String, complete: Boolean)
+case class Todo(id: Option[String], label: String, complete: Boolean) {
+	def hasId(id: String): Boolean =
+		this.id == Some(id)
 
-object TodoItem {
+	def withId: Todo =
+		this.copy(id = id orElse Some(Todo.randomId))
+}
+
+object Todo {
 	def randomId: String =
 		java.util.UUID.randomUUID.toString
 
-	def apply(label: String, complete: Boolean = false): TodoItem =
-		TodoItem(randomId, label, complete)
+	val empty: Todo =
+		Todo(None, "", false)
+
+	def apply(label: String, complete: Boolean = false): Todo =
+		Todo(Some(randomId), label, complete)
 }
