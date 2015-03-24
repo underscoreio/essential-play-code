@@ -1,0 +1,4 @@
+GET  /             controllers.TodoController.index
+POST /             controllers.TodoController.submitTodoForm
+
+GET  /assets/*file controllers.Assets.at(path="/public", file)
