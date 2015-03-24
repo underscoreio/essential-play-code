@@ -3,7 +3,7 @@ package models
 case class TodoList(items: Seq[Todo]) {
 	def addOrUpdate(item: Todo): TodoList =
 		item.id match {
-			case Some(id) if this.contains(id) =>
+			case Some(id) if this contains id =>
 				this.copy(items.map(item2 => if(item2 hasId id) item else item2))
 
 			case _ =>

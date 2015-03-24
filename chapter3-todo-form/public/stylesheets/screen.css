@@ -8,15 +8,6 @@ html, body {
 	padding-left: 0;
 }
 
-.todo-item label {
-	display: block;
-	padding: .5em;
-}
-
-.todo-item:hover label {
-	background: #eeeeee;
-}
-
 .todo-form {
 	display: block;
 }
