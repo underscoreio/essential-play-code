@@ -1,4 +1,4 @@
-@(editForms: Seq[Form[models.Todo]], createForm: Form[models.Todo])
+@(todoList: TodoList)
 
 @import models._
 
@@ -6,18 +6,18 @@
   <h2>My current todos</h2>
 
   <ul class="todo-list">
-  @for(editForm <- editForms) {
+  @for(item <- todoList.items) {
     <li class="todo-item">
-			<label>
-				<input type="checkbox" @if(item.complete) { checked }>
-				@item.label
-			</label>
+      <label>
+        <input type="checkbox" @if(item.complete) { checked }>
+        @item.label
+      </label>
     </li>
   }
   </ul>
 
   <h2>Add a new todo</h2>
 
- 	<!-- TODO: Add "create todo" form to template -->
- 	<p>TODO: Add "create todo" form to template</p>
+   <!-- TODO: Add "create todo" form to template -->
+   <p>TODO: Add "create todo" form to template</p>
 }
