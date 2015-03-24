@@ -1,60 +1,60 @@
 html, body {
-	font-family: helvetica, sans-serif;
-	font-size: 14px;
+  font-family: helvetica, sans-serif;
+  font-size: 14px;
 }
 
 .todo-list {
-	list-style: 0;
-	padding-left: 0;
+  list-style: 0;
+  padding-left: 0;
 }
 
 .todo-item label {
-	display: block;
-	padding: .5em;
+  display: block;
+  padding: .5em;
 }
 
 .todo-item:hover label {
-	background: #eeeeee;
+  background: #eeeeee;
 }
 
 .todo-form {
-	display: block;
+  display: block;
 }
 
 .todo-form dl {
-	display: inline-block;
-	vertical-align: top;
-	margin: .5ex 0;
+  display: inline-block;
+  vertical-align: top;
+  margin: .5ex 0;
 }
 
 .todo-form dt {
-	display: none;
+  display: none;
 }
 
 .todo-form dd {
-	margin-left: 0;
+  margin-left: 0;
 }
 
 .todo-form dd.error {
-	padding: 1ex 1em;
-	margin: 0;
-	color: #a00;
+  padding: 1ex 1em;
+  margin: 0;
+  color: #a00;
 }
 
 .todo-form input[type=checkbox] {
-	display: block;
-	margin-top: 1.5ex;
+  display: block;
+  margin-top: 1.5ex;
 }
 
 .todo-form input[type=text],
 .todo-form button {
-	font-size: 14px;
-	font-family: helvetica, sans-serif;
-	padding: 1ex 1em;
-	margin: 0;
-	border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: helvetica, sans-serif;
+  padding: 1ex 1em;
+  margin: 0;
+  border: 1px solid #ccc;
 }
 
 .todo-form button {
-	background: #eee;
+  background: #eee;
 }
