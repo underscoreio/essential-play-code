@@ -15,7 +15,7 @@ object TodoController extends Controller with TodoDataHelpers {
     Ok(renderTodoList(todoList))
   }
 
-  def createTodo = Action { request =>
+  def submitTodoForm = Action { request =>
     // TODO: Write code to handle the form submission:
     //  - validate the form;
     //  - if form is valid:
