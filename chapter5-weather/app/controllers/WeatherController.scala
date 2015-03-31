@@ -21,18 +21,24 @@ object WeatherController extends Controller {
 
   def report(location: String) =
     Action.async { request =>
+      val weather  = fetchWeather(location)
+      val forecast = fetchForecast(location)
       for {
-        weather  <- fetch[Weather]("weather", location)
-        forecast <- fetch[Forecast]("forecast", location)
+        weather  <- weather
+        forecast <- forecast
       } yield Ok(views.html.report(location, weather, forecast))
     }
 
-  def fetch[A: Reads](endpoint: String, location: String): Future[A] = {
-    Logger.info(s"Fetching $endpoint for $location")
+  def fetchWeather(location: String): Future[Weather] =
+    fetch[Weather]("weather", location)
+
+  def fetchForecast(location: String): Future[Forecast] =
+    fetch[Forecast]("forecast", location)
+
+  def fetch[A: Reads](endpoint: String, location: String): Future[A] =
     WS.url(s"http://api.openweathermap.org/data/2.5/$endpoint?q=$location,uk").
       withFollowRedirects(true).
       withRequestTimeout(500).
       get().
       map(_.json.as[A])
-  }
 }
