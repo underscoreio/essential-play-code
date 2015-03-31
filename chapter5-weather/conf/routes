@@ -1,0 +1,7 @@
+GET /                 controllers.WeatherController.index
+GET /report/:location controllers.WeatherController.report(location: String)
+
+# Serve static files from /public in the local filesystem to /assets in URI-space.
+#
+# See https://www.playframework.com/documentation/2.3.x/Assets for more information.
+GET /assets/*file controllers.Assets.at(path="/public", file)

@@ -1,0 +1,17 @@
+@(locations: Seq[String])
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Weather Locations</title>
+  </head>
+  <body>
+    <h1>Weather Locations</h1>
+    <ul>
+      @for(location <- locations) {
+        <li><a href="@routes.WeatherController.report(location)">@location</a></li>
+      }
+    </ul>
+  </body>
+</html>
