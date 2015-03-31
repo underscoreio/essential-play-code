@@ -26,21 +26,21 @@ object TimeController extends Controller with TimeHelpers {
 }
 
 trait TimeHelpers {
-  private def localTime: DateTime =
+  def localTime: DateTime =
     DateTime.now
 
-  private def localTimeInZone(zoneId: String): Option[DateTime] =
+  def localTimeInZone(zoneId: String): Option[DateTime] =
     zoneForId(zoneId) map (DateTime.now.withZone)
 
-  private def timeToString(time: DateTime): String =
+  def timeToString(time: DateTime): String =
     DateTimeFormat.shortTime.print(time)
 
-  private def zoneIds: List[String] = {
+  def zoneIds: List[String] = {
     import scala.collection.JavaConversions._
     DateTimeZone.getAvailableIDs.toList
   }
 
-  private def zoneForId(zoneId: String): Option[DateTimeZone] =
+  def zoneForId(zoneId: String): Option[DateTimeZone] =
     try { Some(DateTimeZone.forID(zoneId)) }
     catch { case exn: IllegalArgumentException => None }
 }
