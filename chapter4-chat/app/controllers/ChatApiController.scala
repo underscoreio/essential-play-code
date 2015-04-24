@@ -16,7 +16,7 @@ object ChatApiController extends Controller with ControllerHelpers {
   //  - Pass it to AuthService.whoami to check the session:
   //     - If the session was found, return an Ok response containing the messages
   //     - If the session was not found, return an Unauthorized response
-  def messages = Action { request =>
+  def messages = Action { implicit request =>
     ???
   }
 
@@ -28,7 +28,7 @@ object ChatApiController extends Controller with ControllerHelpers {
   //           - If it was valid, pass it to ChatService.chat
   //           - If it was invalud, return a BadRequest response
   //     - If the session was not found, return an Unauthorized response
-  def chat = Action { request =>
+  def chat = Action { implicit request =>
     ???
   }
 }

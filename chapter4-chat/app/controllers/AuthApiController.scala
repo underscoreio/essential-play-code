@@ -16,7 +16,7 @@ object AuthApiController extends Controller with ControllerHelpers {
   //     - If the login was successful, return an Ok result containing the response
   //     - If the user was not found, return a BadRequest result containing the response
   //     - If the password was incorrect, return a PasswordIncorrect result containing the response
-  def login = Action { request =>
+  def login = Action { implicit request =>
     ???
   }
 
@@ -26,7 +26,7 @@ object AuthApiController extends Controller with ControllerHelpers {
   //  - Return an appropriate result based on the response:
   //     - If the session was found, return an Ok response
   //     - If the session was not found, return a NotFound response
-  def whoami = Action { request =>
+  def whoami = Action { implicit request =>
     ???
   }
 }

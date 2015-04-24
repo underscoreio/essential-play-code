@@ -40,4 +40,17 @@ object ChatController extends Controller with ControllerHelpers {
   def submitMessage = Action { implicit request =>
     ???
   }
+
+  private def withAuthenticatedUser(request: Request[AnyContent])(func: Credentials => Result): Result =
+    request.sessionCookieId match {
+      case Some(sessionId) =>
+        AuthService.whoami(sessionId) match {
+          case res: Credentials     => func(res)
+          case res: SessionNotFound => redirectToLogin
+        }
+      case None => redirectToLogin
+    }
+
+  private val redirectToLogin: Result =
+    Redirect(routes.AuthController.login)
 }

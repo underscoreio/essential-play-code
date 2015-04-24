@@ -17,7 +17,7 @@ object AuthController extends Controller with ControllerHelpers {
   //  - Create a login page template:
   //     - Accepts a login form as a parameter
   //     - Displays the form and a submit button
-  def login = Action { request =>
+  def login = Action { implicit request =>
     ???
   }
 
@@ -36,4 +36,7 @@ object AuthController extends Controller with ControllerHelpers {
   def submitLogin = Action { implicit request =>
     ???
   }
+
+  def loginRedirect(res: LoginSuccess): Result =
+    Redirect(routes.ChatController.index).withSessionCookie(res.sessionId)
 }
