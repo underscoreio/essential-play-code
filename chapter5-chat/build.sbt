@@ -7,7 +7,7 @@ libraryDependencies in common += ws
 
 
 
-lazy val authApi = project.in(file("./auth-api")).
+lazy val authApi = project.in(file("./authApi")).
   dependsOn(common).
   enablePlugins(PlayScala)
 
@@ -15,7 +15,7 @@ scalaVersion in authApi := "2.11.4"
 
 
 
-lazy val chatApi = project.in(file("./chat-api")).
+lazy val chatApi = project.in(file("./chatApi")).
   dependsOn(common).
   enablePlugins(PlayScala)
 
