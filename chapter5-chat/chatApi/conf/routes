@@ -1,0 +1,3 @@
+GET  /message controllers.ChatApiController.messages
+POST /message controllers.ChatApiController.chat
+

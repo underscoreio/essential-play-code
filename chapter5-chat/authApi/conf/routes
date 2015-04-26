@@ -1,0 +1,3 @@
+POST /login             controllers.AuthApiController.login
+GET  /whoami/:sessionId controllers.AuthApiController.whoami(sessionId: String)
+POST /logout/:sessionId controllers.AuthApiController.logout(sessionId: String)

@@ -1,0 +1,1 @@
+object Global extends GlobalApiSettings

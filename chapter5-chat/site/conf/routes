@@ -1,0 +1,9 @@
+GET  /             controllers.LandingController.index
+
+GET  /chat         controllers.ChatController.index
+POST /chat         controllers.ChatController.submitMessage
+
+GET  /login        controllers.AuthController.login
+POST /login        controllers.AuthController.submitLogin
+
+GET  /assets/*file controllers.Assets.at(path="/public", file)
