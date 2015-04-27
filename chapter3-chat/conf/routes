@@ -6,4 +6,4 @@ POST /chat         controllers.ChatController.submitMessage
 GET  /login        controllers.AuthController.login
 POST /login        controllers.AuthController.submitLogin
 
-GET  /assets/*file controllers.Assets.at(path="/public", file)
+GET  /assets/*file controllers.Assets.versioned(path="/public", file: Asset)
