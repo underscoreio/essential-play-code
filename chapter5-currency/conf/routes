@@ -1,0 +1,2 @@
+GET /convert/:fromAmount/:fromCurrency/to/all         controllers.CurrencyController.convertAll(fromAmount: Double, fromCurrency: models.Currency)
+GET /convert/:fromAmount/:fromCurrency/to/:toCurrency controllers.CurrencyController.convertOne(fromAmount: Double, fromCurrency: models.Currency, toCurrency: models.Currency)
