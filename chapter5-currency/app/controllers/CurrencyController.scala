@@ -8,39 +8,22 @@ import models._
 object CurrencyController extends Controller with ExchangeRateHelpers {
   def convertOne(fromAmount: Double, fromCurrency: Currency, toCurrency: Currency) =
     Action.async { request =>
-      exchange(fromAmount, fromCurrency, toCurrency) map { toAmount =>
-        Ok(formatOutput(fromAmount, fromCurrency, toAmount, toCurrency))
-      }
+      exchange(fromAmount, fromCurrency, toCurrency).
+        map(Ok(_))
     }
 
   def convertAll(fromAmount: Double, fromCurrency: Currency) =
     Action.async { request =>
-      val conversionFutures: Seq[Future[(Double, Currency)]] =
-        currencies map { toCurrency =>
-          exchange(fromAmount, fromCurrency, toCurrency) map { toAmount =>
-            (toAmount, toCurrency)
-          }
-        }
-
-      val futureConversions: Future[Seq[(Double, Currency)]] =
-        Future.sequence(conversionFutures)
-
-      val futureResult: Future[Result] =
-        futureConversions map { conversions =>
-          conversions map {
-            case (toAmount, toCurrency) =>
-              formatOutput(fromAmount, fromCurrency, toAmount, toCurrency)
-          } mkString ("\n")
-        } map (Ok(_))
-
-      futureResult
+      Future.
+        sequence(currencies.map(exchange(fromAmount, fromCurrency, _))).
+        map(lines => Ok(lines mkString "\n"))
     }
 
-  def exchange(fromAmount: Double, fromCurrency: Currency, toCurrency: Currency): Future[Double] =
+  def exchange(fromAmount: Double, fromCurrency: Currency, toCurrency: Currency): Future[String] =
     for {
       usdAmount <- toUSD(fromAmount, fromCurrency)
       toAmount  <- fromUSD(usdAmount, toCurrency)
-    } yield toAmount
+    } yield formatConversion(fromAmount, fromCurrency, toAmount, toCurrency)
 }
 
 trait ExchangeRateHelpers {
@@ -57,6 +40,6 @@ trait ExchangeRateHelpers {
   def fromUSD(amount: Double, to: Currency): Future[Double] =
     toUSD(1.0, to) map (amount / _)
 
-  def formatOutput(fromAmount: Double, fromCurrency: Currency, toAmount: Double, toCurrency: Currency): String =
+  def formatConversion(fromAmount: Double, fromCurrency: Currency, toAmount: Double, toCurrency: Currency): String =
     Currency.format(fromAmount, fromCurrency) + " = " + Currency.format(toAmount, toCurrency)
 }
