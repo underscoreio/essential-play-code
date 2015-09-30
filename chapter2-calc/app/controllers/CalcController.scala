@@ -11,7 +11,7 @@ object CalcController extends Controller {
   //  - return a plain text HTTP 200 response containing the result.
   def add(a: Int, b: Int) = ???
 
-  // TODO: Create an action called `add`:
+  // TODO: Create an action called `and`:
   //
   //  - accept two booleans extracted from the URL;
   //  - and them together;
@@ -28,7 +28,7 @@ object CalcController extends Controller {
   // TIP: Use the `urlDecode` helper method if you need to to decode the .
   def concat(args: String) = ???
 
-  // TODO: Create an action called `concat`:
+  // TODO: Create an action called `sort`:
   //
   //  - accept a list of integers extracted from the URL;
   //  - sort the list;
