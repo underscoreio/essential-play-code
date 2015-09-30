@@ -1,4 +1,4 @@
-lazy val app = project.in(file("."))
+lazy val lights = project.in(file("."))
 
 scalaVersion := "2.11.7"
 

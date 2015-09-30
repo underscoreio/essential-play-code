@@ -1,4 +1,4 @@
-lazy val app = project.in(file("."))
+lazy val macro = project.in(file("."))
 
 scalaVersion := "2.11.7"
 
