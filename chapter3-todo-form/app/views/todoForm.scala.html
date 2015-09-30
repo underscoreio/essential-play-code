@@ -1,0 +1,30 @@
+@(form: Form[models.Todo])(implicit messages: Messages)
+
+@helper.form(action = routes.TodoController.submitTodoForm, 'class -> "todo-form") {
+  <input type="hidden" name="id" value="@form("id").value">
+
+  @helper.checkbox(
+    form("complete"),
+    '_class -> "todo-complete",
+    '_label -> "",
+    '_help -> ""
+  )
+
+  @helper.inputText(
+    form("label"),
+    '_class -> "todo-label",
+    '_label -> "",
+    '_help -> "",
+    'placeholder -> "Enter a new todo"
+  )
+
+  <dl>
+    <dd>
+      @if(form("id").value.isDefined) {
+        <button type="submit">Update</button>
+      } else {
+        <button type="submit">Create</button>
+      }
+    </dd>
+  </dl>
+}

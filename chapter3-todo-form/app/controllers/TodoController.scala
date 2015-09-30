@@ -1,15 +1,28 @@
 package controllers
 
 import play.api._
+import play.api.i18n._
 import play.api.mvc._
 import play.api.data.Form
 import play.twirl.api.Html
 import models._
 
+<<<<<<< HEAD
 object TodoController extends Controller with TodoDataHelpers {
   // TODO: Create a Form[Todo]:
   //  - build the basic form mapping;
   //  - create constraint to ensure the label is non-empty.
+=======
+object TodoController extends Controller
+    with TodoFormHelpers
+    with TodoDataHelpers
+    with I18nSupport {
+  val messagesApi = Messages.Implicits.applicationMessagesApi(Play.current)
+
+  def index = Action { request =>
+    Ok(renderTodoList(editForms(todoList), todoForm))
+  }
+>>>>>>> 964f402... Minimal changes to `chapter3-todo-form` to add I18N support
 
   def index = Action { request =>
     Ok(renderTodoList(todoList))
