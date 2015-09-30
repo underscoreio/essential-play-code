@@ -1,4 +1,4 @@
-lazy val app = project.in(file(".")).enablePlugins(PlayScala)
+lazy val calc = project.in(file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.7"
 
