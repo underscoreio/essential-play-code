@@ -1,4 +1,4 @@
-@(form: Form[models.Todo])
+@(form: Form[models.Todo])(implicit messages: Messages)
 
 @helper.form(action = routes.TodoController.submitTodoForm, 'class -> "todo-form") {
   <input type="hidden" name="id" value="@form("id").value">

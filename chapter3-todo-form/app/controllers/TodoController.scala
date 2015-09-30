@@ -1,6 +1,7 @@
 package controllers
 
 import play.api._
+import play.api.i18n._
 import play.api.mvc._
 import play.api.data.Form
 import play.twirl.api.Html
@@ -8,7 +9,10 @@ import models._
 
 object TodoController extends Controller
     with TodoFormHelpers
-    with TodoDataHelpers {
+    with TodoDataHelpers
+    with I18nSupport {
+  val messagesApi = Messages.Implicits.applicationMessagesApi(Play.current)
+
   def index = Action { request =>
     Ok(renderTodoList(editForms(todoList), todoForm))
   }
