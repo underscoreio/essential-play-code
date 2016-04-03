@@ -1,6 +1,6 @@
 lazy val app = project.in(file(".")).enablePlugins(PlayScala)
 
-scalaVersion in app := "2.11.2"
+scalaVersion := "2.11.8"
 
-libraryDependencies in app ++= Seq(
+libraryDependencies ++= Seq(
 )
