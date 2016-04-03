@@ -22,6 +22,18 @@ or downloaded on demand during compilation.
 See below for quick getting started instructions.
 For more detailed instructions see Chapter 1 of the book.
 
+### Note on Using Scala IDE
+
+Older versions of this repo shipped with the `sbteclipse` plugin
+to make it easier to set up Scala IDE.
+
+Current best practices recommend installing `sbteclipse` as a global plugin.
+I have removed it deom from this repo because it was causing conflicts
+for people who were doing the right thing.
+
+See the `sbteclipse` [documentation](https://github.com/typesafehub/sbteclipse)
+for instructions on installing it as a global plugin.
+
 ### Getting Started on Linux or OS X
 
 Complete the following steps outlined in Chapter 1 in the section entitled

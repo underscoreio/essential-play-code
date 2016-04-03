@@ -1,6 +1,6 @@
 lazy val app = project.in(file("."))
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
   json,

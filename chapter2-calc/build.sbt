@@ -1,7 +1,5 @@
-lazy val app = project.in(file(".")).enablePlugins(PlayScala)
+lazy val chat = project.in(file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.8"
 
-libraryDependencies ++= Seq(
-  "joda-time" % "joda-time" % "2.0"
-)
+libraryDependencies in chat += "org.scalatestplus" %% "play" % "1.2.0" % "test"
