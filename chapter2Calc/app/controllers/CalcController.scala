@@ -1,9 +1,10 @@
 package controllers
 
+import javax.inject._
 import play.api._
 import play.api.mvc._
 
-object CalcController extends Controller {
+@Singleton class CalcController @Inject() (cc: ControllerComponents) extends AbstractController(cc) {
   def add(a: Int, b: Int) = Action { request =>
     Ok((a + b).toString)
   }

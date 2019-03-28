@@ -1,11 +1,12 @@
 package controllers
 
+import javax.inject._
 import play.api._
 import play.api.mvc._
 import play.twirl.api.Html
 import models._
 
-object TodoController extends Controller with TodoDataHelpers {
+@Singleton class TodoController @Inject() (cc: ControllerComponents) extends AbstractController(cc) with TodoDataHelpers {
   def index = Action { request =>
     Ok(renderTodoList(todoList))
   }

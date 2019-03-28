@@ -1,6 +1,8 @@
 package services
 
-object AuthService {
+import javax.inject._
+
+@Singleton class AuthService {
   import services.AuthServiceMessages._
 
   private val passwords = Map[Username, Password](

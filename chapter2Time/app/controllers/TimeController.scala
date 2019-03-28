@@ -1,12 +1,13 @@
 package controllers
 
 import java.util.Date
+import javax.inject._
 import org.joda.time.{DateTime, DateTimeZone}
 import org.joda.time.format.DateTimeFormat
 import play.api._
 import play.api.mvc._
 
-object TimeController extends Controller with TimeHelpers {
+@Singleton class TimeController @Inject() (cc: ControllerComponents) extends AbstractController(cc) with TimeHelpers {
   def time = Action { request =>
     Ok(timeToString(localTime))
   }

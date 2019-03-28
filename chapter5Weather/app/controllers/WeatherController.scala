@@ -1,16 +1,17 @@
 package controllers
 
+import javax.inject._
+import models._
 import play.api._
 import play.api.Play.current
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import play.api.libs.ws._
 import play.api.mvc._
 import play.twirl.api.Html
-import scala.concurrent.{ Future, ExecutionContext }
-import models._
+import scala.concurrent._
+import scala.concurrent.duration._
 
-object WeatherController extends Controller {
+@Singleton class WeatherController @Inject() (cc: ControllerComponents, wsClient: WSClient)(implicit ec: ExecutionContext) extends AbstractController(cc) {
   def index = Action { request =>
     Ok(views.html.index(Seq(
       "Birmingham",
@@ -36,9 +37,9 @@ object WeatherController extends Controller {
     fetch[Forecast]("forecast", location)
 
   def fetch[A: Reads](endpoint: String, location: String): Future[A] =
-    WS.url(s"http://api.openweathermap.org/data/2.5/$endpoint?q=$location,uk").
+    wsClient.url(s"http://api.openweathermap.org/data/2.5/$endpoint?q=$location,uk").
       withFollowRedirects(true).
-      withRequestTimeout(500).
+      withRequestTimeout(500.seconds).
       get().
       map(_.json.as[A])
 }

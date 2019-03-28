@@ -1,24 +1,22 @@
 package controllers
 
+import javax.inject._
 import play.api._
 import play.api.mvc._
+import services._
+import services.AuthServiceMessages._
+import services.ChatServiceMessages._
 
-object ChatController extends Controller with ControllerHelpers {
-  import services.AuthService
-  import services.AuthServiceMessages._
-
-  import services.ChatService
-  import services.ChatServiceMessages._
-
+@Singleton class ChatController @Inject() (cc: ControllerComponents, authService: AuthService, chatService: ChatService) extends AbstractController(cc) with ControllerHelpers {
   def index = Action { request =>
     withAuthenticatedUser(request) { creds =>
-      Ok(ChatService.messages.mkString("\n"))
+      Ok(chatService.messages.mkString("\n"))
     }
   }
 
   def submitMessage(text: String) = Action { request =>
     withAuthenticatedUser(request) { creds =>
-      ChatService.chat(creds.username, text)
+      chatService.chat(creds.username, text)
       Redirect(routes.ChatController.index)
     }
   }
@@ -26,7 +24,7 @@ object ChatController extends Controller with ControllerHelpers {
   private def withAuthenticatedUser(request: Request[AnyContent])(func: Credentials => Result): Result =
     request.sessionCookieId match {
       case Some(sessionId) =>
-        AuthService.whoami(sessionId) match {
+        authService.whoami(sessionId) match {
           case res: Credentials     => func(res)
           case res: SessionNotFound => BadRequest("Not logged in!")
         }

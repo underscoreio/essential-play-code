@@ -1,6 +1,8 @@
 package services
 
-object ChatService {
+import javax.inject._
+
+@Singleton class ChatService {
   import ChatServiceMessages._
 
   private var postedMessages = Vector[Message]()

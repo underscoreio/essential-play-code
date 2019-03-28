@@ -2,9 +2,7 @@ package models
 
 import play.api.mvc._
 
-sealed trait Currency {
-
-}
+sealed abstract class Currency
 final case object USD extends Currency
 final case object GBP extends Currency
 final case object EUR extends Currency

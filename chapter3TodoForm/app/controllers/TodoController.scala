@@ -1,5 +1,6 @@
 package controllers
 
+import javax.inject._
 import play.api._
 import play.api.i18n._
 import play.api.mvc._
@@ -7,17 +8,15 @@ import play.api.data.Form
 import play.twirl.api.Html
 import models._
 
-object TodoController extends Controller
+@Singleton class TodoController @Inject() (mcc: MessagesControllerComponents) extends MessagesAbstractController(mcc)
     with TodoFormHelpers
     with TodoDataHelpers
     with I18nSupport {
-  val messagesApi = Messages.Implicits.applicationMessagesApi(Play.current)
-
-  def index = Action { request =>
+  def index = Action { implicit request: MessagesRequest[AnyContent] =>
     Ok(renderTodoList(editForms(todoList), todoForm))
   }
 
-  def submitTodoForm = Action { implicit request =>
+  def submitTodoForm = Action { implicit request: MessagesRequest[AnyContent] =>
     todoForm.bindFromRequest().fold(
       hasErrors = { errorForm =>
         errorForm("id").value match {
@@ -34,7 +33,7 @@ object TodoController extends Controller
     )
   }
 
-  def editForms(todoList: TodoList, currentForm: Form[Todo] = todoForm): Seq[Form[Todo]] = {
+  def editForms(todoList: TodoList, currentForm: Form[Todo] = todoForm)(implicit msgs: Messages): Seq[Form[Todo]] = {
     currentForm("id").value match {
       case Some(currentId) =>
         todoList.items map {
@@ -49,7 +48,7 @@ object TodoController extends Controller
     }
   }
 
-  def renderTodoList(editForms: Seq[Form[Todo]], createForm: Form[Todo]): Html =
+  def renderTodoList(editForms: Seq[Form[Todo]], createForm: Form[Todo])(implicit msgs: Messages): Html =
     views.html.todoList(editForms, createForm)
 }
 

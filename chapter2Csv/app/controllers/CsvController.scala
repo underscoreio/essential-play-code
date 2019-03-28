@@ -1,9 +1,10 @@
 package controllers
 
+import javax.inject._
 import play.api._
 import play.api.mvc._
 
-object CsvController extends Controller with CsvHelpers {
+@Singleton class CsvController @Inject() (cc: ControllerComponents) extends AbstractController(cc) with CsvHelpers {
   def toCsv = Action { request =>
     formDataResult(request) orElse
       plainTextResult(request) orElse
@@ -55,5 +56,5 @@ trait CsvHelpers {
     str.replaceAll("\t", ",")
 
   def rawBufferToCsv(buff: RawBuffer): String =
-    tsvToCsv(buff.asBytes() map (new String(_)) getOrElse "")
+    tsvToCsv(buff.asBytes().map(bytes => new String(bytes.toArray)) getOrElse "")
 }

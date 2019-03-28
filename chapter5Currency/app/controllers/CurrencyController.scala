@@ -1,11 +1,11 @@
 package controllers
 
-import play.api.mvc._
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import scala.concurrent.Future
+import javax.inject._
 import models._
+import play.api.mvc._
+import scala.concurrent._
 
-object CurrencyController extends Controller with ExchangeRateHelpers {
+@Singleton class CurrencyController @Inject() (cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
   def convertOne(fromAmount: Double, fromCurrency: Currency, toCurrency: Currency) =
     Action.async { request =>
       exchange(fromAmount, fromCurrency, toCurrency).
@@ -24,9 +24,9 @@ object CurrencyController extends Controller with ExchangeRateHelpers {
       usdAmount <- toUSD(fromAmount, fromCurrency)
       toAmount  <- fromUSD(usdAmount, toCurrency)
     } yield formatConversion(fromAmount, fromCurrency, toAmount, toCurrency)
-}
 
-trait ExchangeRateHelpers {
+  // Helpers
+
   val currencies: Seq[Currency] =
     Seq(USD, GBP, EUR)
 
@@ -38,7 +38,7 @@ trait ExchangeRateHelpers {
     }
 
   def fromUSD(amount: Double, to: Currency): Future[Double] =
-    toUSD(1.0, to) map (amount / _)
+    toUSD(1.0, to).map(amount / _)
 
   def formatConversion(fromAmount: Double, fromCurrency: Currency, toAmount: Double, toCurrency: Currency): String =
     Currency.format(fromAmount, fromCurrency) + " = " + Currency.format(toAmount, toCurrency)

@@ -1,7 +1,6 @@
 import java.util.Date
 import org.scalatest._
 import play.api.libs.json._
-import play.api.data.validation.ValidationError
 
 class JsonMacroExerciseSpec extends WordSpec with MustMatchers {
   import JsonMacroExercise._
@@ -39,7 +38,7 @@ class JsonMacroExerciseSpec extends WordSpec with MustMatchers {
       )
 
       Json.fromJson[Message](json) must equal {
-        JsError(JsPath \ "posted", ValidationError("error.expected.date.isoformat", "yyyy-MM-dd")) ++
+        JsError(JsPath \ "posted", JsonValidationError("error.expected.date.isoformat", "yyyy-MM-dd")) ++
         JsError(JsPath \ "author", "error.expected.jsstring") ++
         JsError(JsPath \ "text",   "error.path.missing")
       }

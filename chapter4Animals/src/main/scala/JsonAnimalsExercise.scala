@@ -18,9 +18,9 @@ object JsonAnimalsExercise {
 
   implicit object AnimalFormat extends Format[Animal] {
     def reads(in: JsValue) = (in \ "type") match {
-      case JsString("Dog")     => dogFormat.reads(in)
-      case JsString("Insect")  => insectFormat.reads(in)
-      case JsString("Swallow") => swallowFormat.reads(in)
+      case JsDefined(JsString("Dog"))     => dogFormat.reads(in)
+      case JsDefined(JsString("Insect"))  => insectFormat.reads(in)
+      case JsDefined(JsString("Swallow")) => swallowFormat.reads(in)
       case _ => JsError(JsPath \ "type", "error.expected.animal.type")
     }
 

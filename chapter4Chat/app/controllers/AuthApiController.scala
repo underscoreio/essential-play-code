@@ -1,17 +1,17 @@
 package controllers
 
-import scala.collection.mutable
-
+import javax.inject._
 import play.api.mvc._
 import play.api.libs.json._
+import scala.collection.mutable
+import services._
+import services.AuthServiceMessages._
 
-object AuthApiController extends Controller with ControllerHelpers {
-  import services.AuthService
-  import services.AuthServiceMessages._
+@Singleton class AuthApiController @Inject() (cc: ControllerComponents, authService: AuthService) extends AbstractController(cc) with ControllerHelpers {
 
   def login = Action { request =>
     withRequestJsonAs[LoginRequest](request) { req =>
-      AuthService.login(req) match {
+      authService.login(req) match {
         case res: LoginSuccess      => Ok(Json.toJson(res))
         case res: UserNotFound      => BadRequest(Json.toJson(res))
         case res: PasswordIncorrect => BadRequest(Json.toJson(res))
@@ -20,7 +20,7 @@ object AuthApiController extends Controller with ControllerHelpers {
   }
 
   def logout(sessionId: String) = Action { request =>
-    AuthService.logout(sessionId)
+    authService.logout(sessionId)
     Ok
   }
 
@@ -33,7 +33,7 @@ object AuthApiController extends Controller with ControllerHelpers {
 
   private def withAuthenticatedUser(request: Request[AnyContent])(func: WhoamiResponse => Result): Result =
     request.headers.get("Authorization") match {
-      case Some(sessionId) => func(AuthService.whoami(sessionId))
+      case Some(sessionId) => func(authService.whoami(sessionId))
       case None            => func(SessionNotFound("NoSessionId"))
     }
 
